@@ -442,8 +442,9 @@ class collection(object):
             raise SDBTypeError("rule must be an instance of dict")
 
         if "_id" in doc:
-            oid = doc.pop("_id")
-            return self.upsert({"$set": doc}, condition={"_id": oid})
+            doc_copy = doc.copy()
+            oid = doc_copy.pop("_id")
+            return self.upsert({"$set": doc_copy}, condition={"_id": oid})
         else:
             return self.insert(doc)
 
